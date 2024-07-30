@@ -16,4 +16,7 @@ COPY index.html /usr/share/nginx/html/index.html
 # This too
 EXPOSE 443
 
+RUN chmod 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
