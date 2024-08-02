@@ -1,11 +1,11 @@
 #!/bin/bash
 
+#------------------ mariadb start ------------------#
 service mariadb start
 
-mariadb -u root -e \
-    "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}; \
-    CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; \
-    GRANT ALL ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; \
-    FLUSH PRIVILEGES;"
-
-service mariadb stop
+#------------------ mariadb config -----------------#
+mariadb -u root -e "CREATE DATABASE IF NOT EXISTS ${WP_DATABASE};"
+mariadb -u root -e "CREATE USER '${WP_USER}'@'%' IDENTIFIED BY '${WP_PASSWORD}';"
+mariadb -u root -e "GRANT ALL ON ${WP_DATABASE}.* TO '${WP_USER}'@'%' \
+                    IDENTIFIED BY '${WP_PASSWORD}';"
+mariadb -u root -e "FLUSH PRIVILEGES;"
