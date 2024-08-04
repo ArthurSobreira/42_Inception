@@ -4,11 +4,6 @@ ARG WP_DATABASE
 ARG WP_USER
 ARG WP_PASSWORD
 
-# Remove these lines later
-COPY .env /app/.env
-WORKDIR /app
-RUN /bin/bash -c "source .env"
-
 RUN apt update && apt upgrade -y && \
 	apt install -y mariadb-server
 
