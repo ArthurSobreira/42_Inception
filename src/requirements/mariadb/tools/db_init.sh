@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#------------------ mariadb start ------------------#
-service mariadb start
-
 # Just because I'm don't make the docker-compose file yet
 WP_DATABASE=wordpress_database
 WP_USER=arsobrei
 WP_PASSWORD=anicepassword@
+
+#------------------ mariadb start ------------------#
+service mariadb start
 
 #------------------ mariadb config -----------------#
 mariadb -u root -e "CREATE DATABASE IF NOT EXISTS ${WP_DATABASE};"
