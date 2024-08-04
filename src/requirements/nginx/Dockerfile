@@ -8,7 +8,7 @@ RUN openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
 	-out /etc/ssl/certs/nginx-selfsigned.crt \
 	-subj "/C=BR/ST=SP/L=Sao Paulo/O=42SP/OU=Student/CN=arsobrei.42.fr"
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d/
+COPY ./conf/nginx.conf /etc/nginx/conf.d
 
 # Remove this line later
 COPY index.html /usr/share/nginx/html/index.html
