@@ -19,4 +19,4 @@ EXPOSE 443
 RUN chmod 755 /var/www/html && \
 	chown -R www-data:www-data /var/www/html
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
