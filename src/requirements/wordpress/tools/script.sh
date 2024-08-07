@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Just because I'm don't make the docker-compose file yet
+# Just because I'm don't make the docker-compose yet
 WP_DATABASE=wordpress_database
 WP_USER=arsobrei
 WP_PASSWORD=anicepassword@
