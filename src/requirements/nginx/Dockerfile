@@ -10,12 +10,6 @@ RUN openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d
 
-# Remove this line later
-COPY index.html /usr/share/nginx/html/index.html
-
-# This too
-EXPOSE 443
-
 RUN chmod 755 /var/www/html && \
 	chown -R www-data:www-data /var/www/html
 
