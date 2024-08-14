@@ -66,10 +66,10 @@ services:
       - wordpress_volume:/var/www/html
     networks:
       - inception_network
-    expose:
-      - 9000
     depends_on:
       - mariadb
+    expose:
+      - 9000
     restart: on-failure
 
   nginx:
