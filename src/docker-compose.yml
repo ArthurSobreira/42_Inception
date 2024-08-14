@@ -1,0 +1,75 @@
+version: '3'
+
+#------------------ network config -----------------#
+networks:
+  inception_network:
+    name: inception_network
+    driver: bridge
+
+#------------------ volumes config -----------------#
+volumes:
+  mariadb_volume:
+    name: mariadb_volume
+    o: bind
+    type: none
+    device: /home/arsobrei/data/mariadb
+
+  wordpress_volume:
+    name: wordpress_volume
+    o: bind
+    type: none
+    device: /home/arsobrei/data/wordpress
+
+#----------------- services config -----------------#
+services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+      args:
+        - WP_DATABASE=${WP_DATABASE}
+        - WP_USER=${WP_USER}
+        - WP_PASSWORD=${WP_PASSWORD}
+    environment:
+      - WP_DATABASE
+      - WP_USER
+      - WP_PASSWORD
+    env_file:
+      - .env
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+    networks:
+      - inception_network
+    expose:
+      - 3306
+    restart: on-failure
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+      args:
+        - WP_DATABASE=${WP_DATABASE}
+        - WP_USER=${WP_USER}
+        - WP_PASSWORD=${WP_PASSWORD}
+        - WP_EMAIL=${WP_EMAIL}
+    environment:
+      - WP_DATABASE
+      - WP_USER
+      - WP_PASSWORD
+      - WP_EMAIL
+    env_file:
+      - .env
+    volumes:
+      - wordpress_volume:/var/www/html
+    networks:
+      - inception_network
+    expose:
+      - 9000
+    depends_on:
+      - mariadb
+    restart: on-failure
+
+  nginx:
