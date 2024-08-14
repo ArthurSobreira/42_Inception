@@ -3,6 +3,7 @@ FROM debian:oldstable
 ARG WP_DATABASE
 ARG WP_USER
 ARG WP_PASSWORD
+ARG WP_EMAIL
 
 WORKDIR /var/www/html/
 
