@@ -73,3 +73,16 @@ services:
     restart: on-failure
 
   nginx:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress_volume:/var/www/html
+    networks:
+      - inception_network
+    depends_on:
+      - wordpress
+    ports:
+      - 443:443
+    restart: on-failure
