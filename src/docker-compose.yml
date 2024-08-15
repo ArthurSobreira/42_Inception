@@ -10,15 +10,17 @@ networks:
 volumes:
   mariadb_volume:
     name: mariadb_volume
-    # o: bind
-    # type: none
-    # device: /home/arsobrei/data/mariadb
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/arsobrei/data/mariadb
 
   wordpress_volume:
     name: wordpress_volume
-    # o: bind
-    # type: none
-    # device: /home/arsobrei/data/wordpress
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/arsobrei/data/wordpress
 
 #----------------- services config -----------------#
 services:
