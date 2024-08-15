@@ -15,6 +15,8 @@ WORDPRESS_PATH	=	$(VOLUME_PATH)/wordpress
 MARIADB_PATH	=	$(VOLUME_PATH)/mariadb
 HOST_FILE		=	/etc/hosts
 COMPOSE_FILE	=	./src/docker-compose.yml
+DOT_ENV_FILE	=	./src/.env
+DOT_ENV_GIST	=	https://gist.githubusercontent.com/ArthurSobreira/50bc09d1fc72b6fe648c4acafbd25184/raw/280bead0291d79e0e0da5fd02ad2f53d2077c2ed/gistfile1.txt
 
 GREEN			=	"\033[32m"
 RED				=	"\033[31m"
@@ -42,6 +44,10 @@ setup:
 		echo $(GREEN)"Creating $(MARIADB_PATH) directory..."$(LIMITER); \
 		sudo mkdir -p $(MARIADB_PATH); \
 	fi
+	@if [ ! -f "$(DOT_ENV_FILE)" ]; then \
+		echo $(GREEN)"Importing .env file..."$(LIMITER); \
+		curl -s $(DOT_ENV_GIST) > $(DOT_ENV_FILE); \
+	fi
 
 start:
 	@if [ -z "$$(docker-compose -f $(COMPOSE_FILE) ps 2> /dev/null | grep Up)" ]; then \
@@ -67,7 +73,8 @@ prune: down
 	@if grep -q 'arsobrei' $(HOST_FILE); then \
 		sudo sed -i '1d' $(HOST_FILE); \
 	fi
-	@sudo rm -fr $(VOLUME_PATH)/*
+	@sudo rm -rf $(VOLUME_PATH)/*
+	@sudo rm -ff $(DOT_ENV_FILE)
 	@docker system prune -f -a
 
 re: prune all
