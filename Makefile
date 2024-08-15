@@ -1,41 +1,73 @@
-VOLUME_PATH=/home/arsobrei/data
-COMPOSE=/home/user42/Projects/42_inception/src/docker-compose.yml
+#------------------------------------------------------------------------------#
+#                                  GENERICS                                    #
+#------------------------------------------------------------------------------#
+
+DEFAULT_GOAL: all
+.DELETE_ON_ERROR: $(NAME)
+.PHONY: all setup start down prune re
+
+#------------------------------------------------------------------------------#
+#                                VARIABLES                                     #
+#------------------------------------------------------------------------------#
+
+VOLUME_PATH		=	/home/arsobrei/data
+WORDPRESS_PATH	=	$(VOLUME_PATH)/wordpress
+MARIADB_PATH	=	$(VOLUME_PATH)/mariadb
+HOST_FILE		=	/etc/hosts
+COMPOSE_FILE	=	./src/docker-compose.yml
+
+GREEN			=	"\033[32m"
+RED				=	"\033[31m"
+CYAN			=	"\033[36m"
+YELLOW			=	"\033[33m"
+LIMITER 		=	"\033[0m"
+
+#------------------------------------------------------------------------------#
+#                                 TARGETS                                      #
+#------------------------------------------------------------------------------#
 
 all: setup start
 
 setup:
-	@sudo chmod 666 /etc/hosts
-	@if ! grep -q 'arsobrei' /etc/hosts; then \
-		sudo echo '127.0.0.1	arsobrei.42.fr' >> /etc/hosts; \
+	@sudo chmod 666 $(HOST_FILE)
+	@if ! grep -q 'arsobrei' $(HOST_FILE); then \
+		echo $(GREEN)"Editing $(HOST_FILE) file..."$(LIMITER); \
+		sudo sed -i '1i 127.0.0.1\tarsobrei.42.fr' $(HOST_FILE); \
 	fi
-	@if [ ! -d "${VOLUME_PATH}/wordpress" ]; then \
-		sudo mkdir -p ${VOLUME_PATH}/wordpress; \
+	@if [ ! -d "$(WORDPRESS_PATH)" ]; then \
+		echo $(GREEN)"Creating $(WORDPRESS_PATH) directory..."$(LIMITER); \
+		sudo mkdir -p $(WORDPRESS_PATH); \
 	fi
-	@if [ ! -d "${VOLUME_PATH}/mariadb" ]; then \
-		sudo mkdir -p ${VOLUME_PATH}/mariadb; \
+	@if [ ! -d "$(MARIADB_PATH)" ]; then \
+		echo $(GREEN)"Creating $(MARIADB_PATH) directory..."$(LIMITER); \
+		sudo mkdir -p $(MARIADB_PATH); \
 	fi
 
 start:
-	@if [ -z "$$(docker-compose -f ${COMPOSE} ps 2> /dev/null | grep Up)" ]; then \
-		docker-compose -f ${COMPOSE} up; \
+	@if [ -z "$$(docker-compose -f $(COMPOSE_FILE) ps 2> /dev/null | grep Up)" ]; then \
+		echo $(CYAN)"Starting containers..."$(LIMITER); \
+		docker-compose -f $(COMPOSE_FILE) up -d; \
 	else \
-		echo "There is containers up, please KILL them :)"; \
+		echo $(YELLOW)"Containers are already running..."$(LIMITER); \
 	fi
 
 down:
-	@if [ -n "$$(docker-compose -f ${COMPOSE} images -q 2> /dev/null)" ]; then \
-		docker-compose -f ${COMPOSE} down; \
+	@if [ -n "$$(docker-compose -f $(COMPOSE_FILE) images -q 2> /dev/null)" ]; then \
+		echo $(RED)"Stopping containers..."$(LIMITER); \
+		docker-compose -f $(COMPOSE_FILE) down; \
 	else \
-		echo "No images to delete!"; \
+		echo $(YELLOW)"Containers are already down..."$(LIMITER); \
 	fi
 
 prune: down
 	@if [ -n "$$(docker volume ls -q)" ]; then \
-		docker volume rm $(shell docker volume ls -q); \
+		echo $(RED)"Removing volumes..."$(LIMITER); \
+		docker volume rm mariadb_volume wordpress_volume; \
 	fi
-	@sudo rm -fr ${VOLUME_PATH}/*
+	@if grep -q 'arsobrei' $(HOST_FILE); then \
+		sudo sed -i '1d' $(HOST_FILE); \
+	fi
+	@sudo rm -fr $(VOLUME_PATH)/*
 	@docker system prune -f -a
 
 re: prune all
-
-.PHONY: all setup start down prune re
