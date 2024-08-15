@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Just because I'm don't make the docker-compose yet
-WP_DATABASE=wordpress_database
-WP_USER=arsobrei
-WP_PASSWORD=anicepassword@
-WP_EMAIL=arsobrei@student.42sp.org.br
-
 #------------------ wordpress config -----------------#
 wp --allow-root config create \
 	--path=/var/www/html \
