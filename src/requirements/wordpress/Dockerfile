@@ -7,7 +7,7 @@ ARG WP_EMAIL
 
 WORKDIR /var/www/html/
 
-RUN apt update && apt upgrade -y && \
+RUN apt update && \
 	apt install -y php7.4 php-fpm php-mysql \
 	mariadb-client wordpress wget
 

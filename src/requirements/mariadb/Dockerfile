@@ -4,7 +4,7 @@ ARG WP_DATABASE
 ARG WP_USER
 ARG WP_PASSWORD
 
-RUN apt update && apt upgrade -y && \
+RUN apt update && \
 	apt install -y mariadb-server
 
 RUN mkdir -p /var/run/mysqld && \
