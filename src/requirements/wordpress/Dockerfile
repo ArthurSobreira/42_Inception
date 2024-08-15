@@ -16,9 +16,8 @@ RUN wget -O /usr/local/bin/wp \
 	chmod +x /usr/local/bin/wp && \
 	wp core download --allow-root --path=/var/www/html
 
-RUN mkdir /run/php
-
-RUN chmod 755 /var/www/html && \
+RUN mkdir /run/php && \
+	chmod 755 /var/www/html && \
 	chown -R www-data:www-data /var/www/html
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
