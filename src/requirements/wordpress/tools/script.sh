@@ -18,6 +18,13 @@ wp core install --allow-root \
 	--admin_password=$WP_PASSWORD \
 	--admin_email=$WP_EMAIL
 
+#---- ----------- wordpress user config ----------------#
+wp user create --allow-root \
+	--path=/var/www/html/ \
+	"$WP_AUTHOR_USER" "$WP_AUTHOR_EMAIL" \
+	--user_pass=$WP_AUTHOR_PASSWORD \
+	--role='author'
+
 #---------------- install redis-cache -----------------#
 wp plugin install --allow-root redis-cache --path=/var/www/html/
 
