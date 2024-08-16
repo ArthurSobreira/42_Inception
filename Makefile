@@ -16,7 +16,7 @@ MARIADB_PATH	=	$(VOLUME_PATH)/mariadb
 HOST_FILE		=	/etc/hosts
 COMPOSE_FILE	=	./src/docker-compose.yml
 DOT_ENV_FILE	=	./src/.env
-DOT_ENV_GIST	=	https://gist.githubusercontent.com/ArthurSobreira/50bc09d1fc72b6fe648c4acafbd25184/raw/280bead0291d79e0e0da5fd02ad2f53d2077c2ed/gistfile1.txt
+DOT_ENV_GIST	=	https://gist.githubusercontent.com/ArthurSobreira/50bc09d1fc72b6fe648c4acafbd25184/raw/6fa77a1d7078b82252f06e7ba16f6ef4bd7148ae/gistfile1.txt
 
 GREEN			=	"\033[32m"
 RED				=	"\033[31m"
