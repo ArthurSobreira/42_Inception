@@ -68,7 +68,7 @@ down:
 prune: down
 	@if [ -n "$$(docker volume ls -q)" ]; then \
 		echo $(RED)"Removing volumes..."$(LIMITER); \
-		docker volume rm mariadb_volume wordpress_volume; \
+		docker volume rm $(shell docker volume ls -q); \
 	fi
 	@if grep -q 'arsobrei' $(HOST_FILE); then \
 		sudo sed -i '1d' $(HOST_FILE); \
