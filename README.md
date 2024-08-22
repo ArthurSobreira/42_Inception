@@ -8,4 +8,6 @@
 
 ## Summary
 
-> <i>The tenth project in the 42sp fundamentals track, <strong>NetPractice</strong>, is about to configure small-scale networks divided into some levels, <i>
+> <i>The thirteenth project in the 42sp fundamentals track, <strong>Inception</strong>, is about to configure small-scale infrastructure </i>
+> <i>containing three services: a WordPress site, that uses MariaDB as a database, and Nginx as a web server, all these services must have </i>
+> <i>their own Dockerfile and a Docker Compose that runs and configures all of them. </i>
