@@ -12,6 +12,8 @@
 > <i>containing three services: a WordPress site, that uses MariaDB as a database, and Nginx as a web server, all these services must have </i>
 > <i>their own Dockerfile and a Docker Compose that runs and configures all of them. </i>
 
+<br>
+
 ## The Project
 
 <br>
@@ -25,3 +27,18 @@
    </table>
 </div>
 <br>
+
+## Run the Program
+
+* Make sure you clone the repository with the following command:
+
+```bash
+$> git clone git@github.com:ArthurSobreira/42_inception.git
+```
+
+* Once cloned, to compile and run the program, use the following commands:
+
+```bash
+$> make setup
+$> make start
+```
