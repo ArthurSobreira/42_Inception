@@ -21,7 +21,7 @@
    <table>
      <tr>
        <td style="border: 5px solid darkgray;">
-         <img height="550" src="https://github.com/ArthurSobreira/42_inception/blob/master/inception.png">
+         <img height="750" src="https://github.com/ArthurSobreira/42_inception/blob/master/inception.png">
        </td>
      </tr>
    </table>
